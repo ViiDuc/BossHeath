@@ -119,11 +119,22 @@ public class BossBuffPlugin : TerrariaPlugin
                 return;
             }
 
+            // Tạo đối tượng NPCSpawnParams để áp dụng tăng cường sát thương và kích thước
+            NPCSpawnParams spawnParams = new NPCSpawnParams
+            {
+                playerCountForMultiplayerDifficultyOverride = 1, // Số lượng người chơi trong trận đấu
+                strengthMultiplierOverride = config.damageMultiplier / 100f,  // Chuyển đổi damageMultiplier từ phần trăm
+                sizeScaleOverride = 1.5f  // Tăng kích thước boss (tuỳ chọn)
+            };
+
+            // Cập nhật lại máu của boss
             npc.lifeMax = (int)(npc.lifeMax * config.hpMultiplier);
             npc.life = npc.lifeMax;
-            npc.damage = (int)(npc.damage * config.damageMultiplier);
 
-            TShock.Utils.Broadcast($"{config.name} has spawned with increased stats! HP x{config.hpMultiplier}, Damage x{config.damageMultiplier}!", Color.Red);
+            // Áp dụng hệ số nhân sát thương từ NPCSpawnParams
+            npc.damage = (int)(npc.damage * spawnParams.strengthMultiplierOverride);
+
+            TShock.Utils.Broadcast($"{config.name} has spawned! HP: {npc.lifeMax}/{npc.lifeMax}, Damage: x{spawnParams.strengthMultiplierOverride}, Size: x{spawnParams.sizeScaleOverride}", Color.Red);
         }
     }
 
