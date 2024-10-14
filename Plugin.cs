@@ -51,7 +51,7 @@ public class BossBuffPlugin : TerrariaPlugin
 
         ServerApi.Hooks.NpcSpawn.Register(this, OnNpcSpawn);
 
-        Commands.ChatCommands.Add(new Command("bossbuff.reload", ReloadBossConfig, "/bossreload"));
+        Commands.ChatCommands.Add(new Command("bossbuff.reload", ReloadBossConfig, "bossreload"));
     }
 
     private void LoadBossConfig()
